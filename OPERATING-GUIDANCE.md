@@ -13,9 +13,9 @@ part it cannot.
 | It does | It never does |
 |---|---|
 | Reads flight logs your ground station wrote | Writes to, moves, or deletes the ground station's own files |
-| Copies them onto the tablet, on a timer | Deletes a flight record it did not create |
+| Copies them onto the tablet, on a timer | Deletes anything from the ground station's own folder |
 | Sends them to cloud storage **you** own | Sends anything anywhere else |
-| Reads back one small file — the shared aircraft list | Downloads flights back onto the tablet |
+| Reads back three small files — the shared aircraft list, the withdrawal list and the operator brand | Downloads flights back onto the tablet |
 
 **Your ground station remains the system of record.** The app is a copier and a courier. If it ever
 disagrees with the ground station, the ground station is right.
@@ -142,7 +142,7 @@ failure is an absence. The chooser shows which tablet each record came from and 
 
 ## 6. Updates
 
-The app checks for a newer version when it starts and offers it. **Later** keeps quiet until the next time
+The app checks for a newer version when it starts, **and once a day after that** — a tablet that lives on a charger and never restarts still finds out. It tells you about a version once rather than on every check. **Later** keeps quiet until the next time
 you open the app.
 
 **Android needs permission to install, granted once per tablet.** It is called **Install unknown apps** —
