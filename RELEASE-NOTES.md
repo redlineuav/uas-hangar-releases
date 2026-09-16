@@ -4,7 +4,83 @@ Newest first. Published by **Redline Aerials, LLC**.
 
 ---
 
+## 1.0.1
+
+**Fixes for 1.0.0, and the two features its published build never carried.** Most of what follows
+corrects code that the 1.0.0 notes *described*; the published 1.0.0 artifact did not contain it.
+
+### An aircraft's in-service date is checked before it is trusted
+
+The date has to be written `YYYY-MM-DD`. Anything else is **ignored**, and the activity log says which
+aircraft and what was typed.
+
+🔴 **This matters more than it sounds.** A date like `9/1/2026` used to stop that aircraft archiving
+anything at all — not some flights, all of them, for as long as the date stayed in the fleet list. The
+only sign was a line in a log that rolls over.
+
+**Two other corrections to the same rule.** It now works for an aircraft filed under `UNKNOWN-AIRCRAFT`
+— one whose manufacturer or model is blank — where before it silently did nothing if that aircraft had a
+nickname. And it can no longer reach aircraft it was never set on: a date set on an aircraft whose name
+matched a manufacturer or model folder used to apply to everything filed underneath it.
+
+### What the log will and will not tell you
+
+**At most five bad in-service dates are named per pass**, then a line saying how many more there were.
+The log holds 500 lines and a fleet with several bad dates would otherwise flush everything else out of it.
+
+### Two aircraft that share an archive folder name lose the rule, rather than share it
+
+If two aircraft would file into the **same folder** in the archive, **neither aircraft's date is applied
+to that folder** and the activity log says so. Picking one silently would apply one airframe's history to
+the other's flights.
+
+**Two ways that happens, and they do not behave the same.** Two aircraft sharing a **nickname** file into
+one folder on a tablet using the simple layout, and that folder loses the rule **whatever dates the two
+carry — including none at all, and including the same date on both.** Two different names that merely
+clean down to the same folder name lose it only when their dates **differ**; the same date on both is not
+a clash and works normally.
+
+🔴 **The nickname case was still wrong until this build, and it withheld flights.** An aircraft whose date
+field is **blank**, or holds something the app refuses — `08/25/2025`, written the way most people write a
+date — used not to count as a claim on the shared folder at all. The other aircraft's date then governed
+that folder on its own and **held back the undated aircraft's flights**, against the rule that a blank
+field can never discard one. All the operator saw was a log line saying the refused date had been ignored.
+
+⚠️ **What is lost is the folder, not the aircraft.** Where either aircraft files somewhere that did not
+clash, its own in-service date still applies there as normal. The 1.0.0 notes said *nothing of either is
+withdrawn by date*, which read as a blanket promise and was broader than the code.
+
+### `Verify archive` reports a lost flight again
+
+A flight missing from **both** the tablet and the archive is reported **MISSING**. In 1.0.0 an
+in-service date could make it count as withdrawn instead, so the one check that says *this flight exists
+nowhere* could be silenced by a fleet setting. Only what you wrote in `withdrawn.json` silences it now.
+
+### A `withdrawn.json` that cannot be read no longer disables your in-service dates
+
+Those dates come from the fleet list, not from that file, so a network blip reading one has no business
+switching off the other. It used to, for that pass only — which meant pre-service flights went up again,
+unpredictably.
+
+### The *Free up space* card says what it actually does
+
+**It waits seven days** after a flight is staged before removing anything, and that was not written down
+anywhere outside the card itself — so an operator who turned it on and saw nothing removed had no
+explanation. **What goes:** the converted flight, its receipt, and this tablet's staged copy of the ground
+station's record. **What never goes:** the ground station's own folder.
+
+It said it never deletes *"the original record the ground station wrote."* It does remove **this tablet's
+staged copy** of that record, once the archive is confirmed to hold it. **The ground station's own folder
+is never touched** — that part was always true, and the card now says which is which.
+
+---
+
 ## 1.0.0
+
+⚠️ **PUBLISHED 2026-09-15, AND THE BUILD THAT SHIPPED DOES NOT CONTAIN TWO OF THE FEATURES DESCRIBED
+BELOW.** The release carried a build made before the *Free up space* control and the per-aircraft
+in-service date existed. **1.0.1 contains everything in this section**, so take the update. The same thing
+happened to 0.9.10 and the note there says so too.
 
 **The first release that is not a beta.**
 
@@ -29,7 +105,7 @@ write.
 ```json
 {
   "before": "2024-01-01",
-  "names": ["AX590175_2026-07-20_19-52-11.tlog"],
+  "names": ["AB123456_2024-07-20_19-52-11.tlog"],
   "folders": ["Old Hire Aircraft - 1234567890"]
 }
 ```
@@ -59,7 +135,7 @@ therefore never checked. **It now checks once a day as well.**
 until you acted on it. It now appears for a version you have not been told about, and clears itself when
 you take the update.
 
-### Converted DJI flights draw their track in Alaris Pro
+### Converted DJI flights draw their track in log-analysis tools
 
 Converted flights were written with the same MAVLink sequence number on every frame. Readers use that
 number to spot dropped frames, so a file that never increments it reads as one frame repeated — and the
@@ -86,14 +162,20 @@ A new control on the **Advanced** screen. It removes the app's own converted cop
 archive already holds — and **it asks the archive first, every time**, so the last copy of a flight is
 never the one it deletes.
 
-**It never touches the record the ground station wrote.** That file is the aircraft's, not the app's.
+**It never touches the ground station's own folder.** That file is the aircraft's, not the app's.
+
+⚠️ **Corrected in 1.0.1 — this said *"never touches the record the ground station wrote"*, and that was wrong.** The app keeps its own staged copy of that record beside the flight, and **that copy is removed once the archive is confirmed to hold it.** The ground station's own folder is untouched, which is the part that was always true.
 
 **Off unless you switch it on**, and the screen says plainly what it will and will not delete.
 
 ### Still not fixed
 
-**Flights archived before this release are not revisited.** Sequence numbers and original records appear
-as new flights are collected; what is already up there stays as it is.
+**Sequence numbers are not applied to flights already in the archive** — those appear as new flights are
+collected.
+
+⚠️ **Original records ARE retroactive, and this section said otherwise.** A flight archived by an earlier
+build that is **still on the tablet** gets its original record sent up on the next pass that meets it. Only
+flights whose staged copy is already gone stay as they are.
 
 ---
 
