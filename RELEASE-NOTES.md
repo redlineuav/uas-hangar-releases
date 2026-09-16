@@ -4,6 +4,55 @@ Newest first. Published by **Redline Aerials, LLC**.
 
 ---
 
+## 1.0.2
+
+**An aircraft that is not on your fleet list no longer archives.**
+
+### What changed
+
+A flight is sent to the archive only if its airframe serial is **on the fleet list**. A serial the
+list does not carry is **not sent**, and the activity log names it:
+
+```
+NOT ON FLEET SN12345678: <flight> not sent -- add the serial to the fleet list to archive it
+```
+
+The pass summary counts them separately — *"3 sent, 12 already there, 0 failed, 41 not on the fleet
+list"* — so they can never be mistaken for flights that were already up there.
+
+🔴 **Nothing is deleted, and this is reversible by one edit.** The flight stays on the tablet exactly
+as it was. **Add the serial to the fleet list and it archives on the next pass**, with no other
+action and nothing to recover. A refusal here costs you a pass; it never costs you a flight.
+
+### Why
+
+A tablet coming back online sent **hundreds of flights** for a serial that had never been on the
+fleet list, into `UNKNOWN-AIRCRAFT`, in one pass. Some of them had been deliberately removed from
+the archive and came straight back. Nothing in the app had ever asked whether an airframe was one of
+yours.
+
+### What is deliberately NOT blocked
+
+Two cases look similar and are not, and both still archive:
+
+- **A tablet nobody has set up yet**, which reports no serial at all. Those flights are real and
+  still reach the archive, under `UNKNOWN-AIRCRAFT`, exactly as before. There is no serial there to
+  be missing from a list.
+- **An aircraft on the list with no manufacturer or model filled in.** It is on the list, so it
+  archives — it just files under `UNKNOWN-AIRCRAFT` until you complete its entry.
+
+⚠️ **And if the fleet list cannot be read at all, nothing is blocked.** A tablet whose list has not
+synced yet keeps archiving everything. Refusing on a missing list would turn one unread file into a
+tablet that quietly stops sending.
+
+### One thing to watch
+
+A blocked flight stays staged on the tablet and **is never cleaned up**, because *Free up space*
+only removes flights the archive has confirmed. A tablet holding a foreign aircraft's history will
+keep holding it until the serial is added to the list or the flights are removed by hand.
+
+---
+
 ## 1.0.1
 
 **Fixes for 1.0.0, and the two features its published build never carried.** Most of what follows
