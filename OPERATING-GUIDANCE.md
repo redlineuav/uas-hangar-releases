@@ -175,8 +175,18 @@ believes it sent.
 | **Archiving needs attention** / **stopped** | Flights are being collected but not sent |
 
 **"Flights waiting" is normal.** It counts flights harvested but not yet archived. It should fall to zero
-when the tablet has a network. **Worry when it climbs steadily and never falls** — that means the archive
-half is not working, and the home screen will say which part.
+when the tablet has a network. **If it climbs steadily and never falls**, check two things in this order:
+
+1. **The activity log, for `NOT ON FLEET`.** Since 1.0.2 a flight whose airframe serial is not on the
+   fleet list is never sent, and it stays in the waiting count forever — **by design, not as a fault.**
+   The fix is one edit: add the serial to the fleet list and the flight archives on the next pass.
+   ⚠️ **The home screen will not tell you this**, and neither will *Flights* — the refusal appears in the
+   activity log and in the "Archive now" summary, and nowhere else.
+2. **Then the home screen**, for a genuine archive fault.
+
+⚠️ **A tablet holding flights for an aircraft that is not on the fleet list never clears them.** *Free up
+space* only removes flights the archive has confirmed, so those staged copies accumulate until the serial
+is added or somebody removes them by hand.
 
 **Check `verify` after any change** to the destination, the provider, or the aircraft register.
 
