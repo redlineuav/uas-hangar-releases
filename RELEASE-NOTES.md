@@ -4,6 +4,69 @@ Newest first. Published by **Redline Aerials, LLC**.
 
 ---
 
+## 1.0.3
+
+**The home screen can now tell you the tablet has stopped archiving.**
+
+### What changed
+
+Until this build the Archive row had **no way to report a failure.** It could say flights were being
+held for an unregistered aircraft, or that copies differed from the archive — but a tablet whose
+uploads were simply failing, every pass, for weeks, still read **Ready**.
+
+That is now fixed. The Archive row watches two things:
+
+- **Passes that fail.** Two archive passes in a row that end with failures turns the row amber; four
+  turns it red.
+- **A backlog nothing is touching.** If flights are waiting and nothing has reached the archive for
+  24 hours the row turns amber; after 72 hours it turns red.
+
+The row names the count and offers **Verify**, which reads the archive itself and reports what it
+finds — a folder that has been deleted or renamed at the cloud, a permission removed from the folder
+while the account still works, or a destination that is simply not answering.
+
+⚠️ **Flights held back on purpose are not counted as a failure.** A tablet refusing flights for an
+aircraft that is not on your fleet list has a backlog by design; it stays amber with **Add serial**,
+and it will not escalate to red just because those flights sit there.
+
+### Also fixed
+
+- **Switching cloud provider no longer leaves a warning you cannot clear.** Changing provider clears
+  the destination, and the Archive row was still grading the tablet on counts belonging to the old
+  archive — including flights that "differ from the archive" in an archive the tablet was no longer
+  pointed at. **Verify** could not clear them and no pass could correct it.
+- **The Archive row offers one remedy at a time, and the more serious fault takes it.** If flights
+  are being held for an unregistered aircraft *and* passes are failing, the row offers **Verify**
+  rather than **Add serial**. The refusal is still named in the row's own line, and adding the serial
+  from the *Fleet* screen works at any time.
+- **Sync fleet now tells you what happened.** On a tablet with no destination chosen it did nothing
+  and said nothing — no message on the screen, no line in the activity log.
+
+### 🔴 A correction to what the app told you about uninstalling
+
+The Help screen said *"Uninstalling removes everything the app kept."* **That was wrong, and it was
+wrong in the direction that matters.**
+
+Flight logs this app copies are kept in the tablet's own **Documents** folder, on purpose — a flight
+that only this app could reach would be one uninstall away from gone. Uninstalling removes the app's
+settings and its cloud sign-in. **It does not remove the copied flight logs, and those contain
+location data.**
+
+⚠️ **Clear that folder yourself before you hand a tablet on, sell it, or send it for repair.**
+
+Two smaller corrections in the same screen: the app asks for **six** permissions and the card said
+four — the two it did not mention are notifications and permission to install an update it has
+downloaded. And the list of what stays on the tablet now includes your cloud sign-in token, not only
+a WebDAV password. **Signing out of the app does not revoke access at your cloud provider** — do
+that in your cloud account.
+
+### What is not in this build
+
+Nothing here has been tested on a tablet. The thresholds above are counted in passes and in hours
+and have not been watched failing on real hardware.
+
+---
+
 ## 1.0.2
 
 **An aircraft that is not on your fleet list no longer archives.**

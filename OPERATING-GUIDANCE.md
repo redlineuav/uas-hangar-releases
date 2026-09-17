@@ -180,13 +180,30 @@ when the tablet has a network. **If it climbs steadily and never falls**, check 
 1. **The activity log, for `NOT ON FLEET`.** Since 1.0.2 a flight whose airframe serial is not on the
    fleet list is never sent, and it stays in the waiting count forever — **by design, not as a fault.**
    The fix is one edit: add the serial to the fleet list and the flight archives on the next pass.
-   ⚠️ **The home screen will not tell you this**, and neither will *Flights* — the refusal appears in the
-   activity log and in the "Archive now" summary, and nowhere else.
+   ⚠️ **On 1.0.2 the home screen will not tell you this**, and neither will *Flights*. The refusal
+   appears in the activity log, in the "Archive now" summary, and as a count in the **Verify** dialog —
+   but not on the home screen, which is why the activity log is step 1 rather than step 2.
 2. **Then the home screen**, for a genuine archive fault.
 
-⚠️ **A tablet holding flights for an aircraft that is not on the fleet list never clears them.** *Free up
-space* only removes flights the archive has confirmed, so those staged copies accumulate until the serial
-is added or somebody removes them by hand.
+🆕 **From 1.0.3 the home screen answers it directly.** The Archive row turns amber, reads
+*"N flights held - their aircraft are not on the fleet list"* and offers **Add serial**. The **Verify**
+dialog, which already gave the count on 1.0.2, now also **names the serials to add**. Until that build is
+on the tablet, use the activity log.
+
+⚠️ **The row offers one remedy at a time, and the more serious fault takes it.** If flights also differ
+from the archive, or if archive passes have been failing, the row offers **Verify** instead of **Add
+serial** — the refusal is still named in the row's own line, and **Add serial** returns once the larger
+fault clears. Adding the serial from the *Fleet* screen works at any time and does not need the row to
+offer it. *Flights* shows these only as *waiting to be sent* in every build,
+which is true and is not the whole answer.
+
+⚠️ **A tablet holding flights for an aircraft that is not on the fleet list does not clear them.** *Free
+up space* only removes flights the archive has confirmed, so those staged copies accumulate until the
+serial is added or somebody removes them by hand. **One exception, from 1.0.3:** a flight the archive
+already holds is sent its provenance receipt even while its airframe is off the register, so that flight
+and its receipt do become clearable. **The receipt is the only thing sent.** The ground station's own
+file the flight was converted from is not uploaded for an airframe that is off the register, so that
+staged copy stays on the tablet until the serial is added.
 
 **Check `verify` after any change** to the destination, the provider, or the aircraft register.
 
