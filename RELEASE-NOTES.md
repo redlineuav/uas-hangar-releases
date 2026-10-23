@@ -4,6 +4,31 @@ Newest first. Published by **Redline Aerials, LLC**.
 
 ---
 
+## 1.2.0
+
+**A recovered flight now files under the day it was flown.**
+
+### What changed
+
+If Auterion Mission Control is closed before it has saved a flight's log — the tablet switched off or
+the app swiped away a minute after landing — it recovers that log the next time it opens. But it names
+the recovered log by the moment it recovered it, so a flight could come back days later and be archived
+under the wrong date.
+
+UAS Hangar now reads the time each log actually starts. When the name is more than a day away from it,
+the flight is archived under its real start time with **`_recovered`** at the end of the name — for
+example `2026-10-21_22-58-29_recovered.tlog` (times in the name are UTC, as Mission Control's are). Normal
+logs, which are named a few minutes to a few hours after they start, keep Mission Control's name.
+
+- **The flight data is untouched.** Only the name of the archived copy changes.
+- **Flights already archived keep their names.** A recovered flight archived before this build stays
+  under the date it was archived with; rename it in your archive if you want it under its real day.
+- A log that cannot be read, or whose start time looks wrong, keeps Mission Control's name.
+
+⚠️ **Nothing in this build had been run on a tablet when it was published.**
+
+---
+
 ## 1.1.1
 
 **The activity log no longer reports a hidden file on every harvest.**
