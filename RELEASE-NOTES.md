@@ -4,6 +4,42 @@ Newest first. Published by **Redline Aerials, LLC**.
 
 ---
 
+## 1.1.0
+
+**You can now tell the app an aircraft is not yours, and two DJI flight-record faults are fixed.**
+
+### What changed
+
+**"Not ours" for flights held off the fleet list.** Since 1.0.2 a flight whose aircraft is not on your
+fleet list is held on the tablet and never archived — but the Archive row stayed amber about it for as
+long as those flights sat there, and the only button was **Add serial**, which would archive them.
+**Add serial** now opens a short list of the serials being held and how many flights each one has,
+with two choices:
+
+- **Add serial** — the aircraft is yours; its flights archive on the next pass.
+- **Not ours** — tick the serials that are not yours. Their flights stay on the tablet and are **never sent**, and this tablet
+  stops warning about them. Nothing is deleted. A different unregistered aircraft turning up later
+  still raises the warning.
+
+The row still says how many flights are being held, so a GOOD row never hides them.
+
+**A DJI flight caught mid-flight is no longer refused for good.** DJI's app writes the top of a
+flight record only when the flight ends. If the tablet's harvest ran while you were flying, earlier
+builds read that unfinished record as *"format v0 is not a version this decoder handles"* and never
+looked at it again. It is now retried until the flight closes. A record DJI's app never finished — a
+crash or a pulled battery mid-flight — is reported once as unfinished after 24 hours untouched, and can
+be accepted on the Flights screen. **Records already refused this way are
+read again automatically on the first harvest after updating** — nothing to do.
+
+**A truncated DJI record no longer retries forever.** A record cut short inside its summary block used
+to fail with `IndexOutOfBoundsException` and be tried again every 15 minutes. It is now reported once
+as a malformed record, and can be accepted on the Flights screen like any other refusal.
+
+⚠️ **Nothing in this build had been run on a tablet when it was published.** It passed the full test
+suite and five rounds of review.
+
+---
+
 ## 1.0.3
 
 **The home screen can now tell you the tablet has stopped archiving.**
