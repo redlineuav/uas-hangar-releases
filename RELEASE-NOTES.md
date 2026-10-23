@@ -4,6 +4,23 @@ Newest first. Published by **Redline Aerials, LLC**.
 
 ---
 
+## 1.1.1
+
+**The activity log no longer reports a hidden file on every harvest.**
+
+### What changed
+
+Every harvest printed a note that a hidden file in the staging folder was being ignored. The file it
+named, `.harvest-index`, is this app's own record of which flights it has already copied. It was never a
+flight, and nothing was being hidden from you. The note now appears only for a hidden file this app did
+not put there.
+
+Nothing else changed from 1.1.0.
+
+⚠️ **Nothing in this build had been run on a tablet when it was published.**
+
+---
+
 ## 1.1.0
 
 **You can now tell the app an aircraft is not yours, and two DJI flight-record faults are fixed.**
